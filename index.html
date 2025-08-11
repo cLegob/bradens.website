@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>braden's website</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      background-color: #222; /* much darker gray */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: white;
+      overflow: hidden; /* prevent scrollbars */
+    }
+
+    body {
+      padding: 50px; /* add space so shadows won't get clipped */
+      box-sizing: border-box;
+    }
+
+    h1 {
+      font-size: 4rem;
+      position: relative;
+      user-select: none;
+      transition: color 0.2s ease;
+      /* make sure shadows can extend beyond text */
+      /* no clipping due to padding on body */
+    }
+  </style>
+</head>
+<body>
+  <h1 id="shadow-text">braden's website</h1>
+
+  <script>
+    const text = document.getElementById('shadow-text');
+
+    document.addEventListener('mousemove', (e) => {
+      // Calculate the position of the mouse relative to the center of the screen
+      const x = e.clientX - window.innerWidth / 2;
+      const y = e.clientY - window.innerHeight / 2;
+
+      const maxShadowOffset = 30; // increased shadow distance
+
+      const shadowX = (-x / (window.innerWidth / 2)) * maxShadowOffset;
+      const shadowY = (-y / (window.innerHeight / 2)) * maxShadowOffset;
+
+      text.style.textShadow = `
+        ${shadowX}px ${shadowY}px 12px rgba(0,0,0,0.9),
+        ${-shadowX}px ${-shadowY}px 15px rgba(255,255,255,0.15)
+      `;
+    });
+  </script>
+</body>
+</html>
