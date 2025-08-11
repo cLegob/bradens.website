@@ -5,56 +5,207 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Gallery - braden's website</title>
   <style>
+    /* Reset and base */
+    * {
+      box-sizing: border-box;
+    }
     body {
       margin: 0;
-      background-color: #222;
-      color: white;
+      background-color: #121217;
+      color: #eee;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      overflow-x: auto;
-      overflow-y: hidden;
-      white-space: nowrap;
-      height: 100vh;
+      min-height: 100vh;
       display: flex;
+      flex-direction: column;
       align-items: center;
       padding: 20px;
+      overflow-y: auto;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
+
+    h1 {
+      margin-bottom: 20px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+    }
+
+    /* Gallery container */
+    #gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      max-width: 1200px;
+      width: 100%;
+    }
+
+    /* Gallery items */
     .gallery-item {
-      display: inline-block;
-      width: 300px;
-      height: 200px;
-      margin-right: 20px;
-      background-color: #444;
-      border-radius: 10px;
-      box-shadow: 0 0 10px #000;
-      text-align: center;
-      vertical-align: middle;
-      line-height: 200px;
-      font-size: 1.2rem;
-      user-select: none;
-      color: #eee;
+      background-color: #222230;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
       flex-shrink: 0;
+      user-select: none;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       overflow: hidden;
-      padding: 10px;
-      box-sizing: border-box;
-      white-space: normal;
     }
+
+    .gallery-item:hover,
+    .gallery-item:focus {
+      outline: none;
+      transform: scale(1.05);
+      box-shadow: 0 8px 30px rgba(0, 255, 255, 0.6);
+      z-index: 2;
+    }
+
+    /* Image styling */
     img.gallery-item {
-      object-fit: cover;
-      line-height: normal;
-      vertical-align: middle;
       width: 300px;
       height: 200px;
+      object-fit: cover;
+      border-radius: 12px;
+      display: block;
+    }
+
+    /* Text box styling */
+    .text-item {
+      width: 300px;
+      height: 200px;
+      padding: 15px 20px;
+      font-size: 1rem;
+      line-height: 1.4;
+      overflow-y: auto;
+      color: #ccc;
+      font-weight: 400;
+      white-space: pre-wrap;
+      user-select: text;
+      background: linear-gradient(145deg, #1e1e2e, #181824);
+      border: 1px solid #2a2a3a;
+      scrollbar-width: thin;
+      scrollbar-color: #00ffff33 transparent;
+    }
+
+    /* Custom scrollbar for WebKit */
+    .text-item::-webkit-scrollbar {
+      width: 8px;
+    }
+    .text-item::-webkit-scrollbar-thumb {
+      background: #00ffff55;
+      border-radius: 4px;
+    }
+    .text-item::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    /* Modal overlay for inspection */
+    #modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(18, 18, 23, 0.95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+      z-index: 9999;
+    }
+    #modal.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    #modal-content {
+      max-width: 90vw;
+      max-height: 90vh;
+      background: #0d0d14;
+      border-radius: 16px;
+      box-shadow: 0 0 40px #00ffffaa;
+      overflow: auto;
+      position: relative;
+      padding: 20px;
+      color: #eee;
+      user-select: text;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    #modal-content img {
+      max-width: 100%;
+      max-height: 80vh;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      box-shadow: 0 0 20px #00ffffaa;
+    }
+
+    #modal-text {
+      max-height: 60vh;
+      overflow-y: auto;
+      font-size: 1.1rem;
+      white-space: pre-wrap;
+      line-height: 1.5;
+      padding: 10px 15px;
+      background: linear-gradient(135deg, #222236, #191927);
       border-radius: 10px;
-      box-shadow: 0 0 10px #000;
+      border: 1px solid #00ffffaa;
+      width: 100%;
+    }
+
+    /* Close button */
+    #modal-close {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: transparent;
+      border: none;
+      color: #00ffff;
+      font-size: 1.8rem;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+    #modal-close:hover {
+      color: #66ffff;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 350px) {
+      .gallery-item,
+      img.gallery-item,
+      .text-item {
+        width: 90vw;
+        height: auto;
+        min-height: 150px;
+      }
     }
   </style>
 </head>
 <body>
+  <h1>Gallery - braden's website</h1>
+  <div id="gallery" aria-label="Gallery content"></div>
+
+  <!-- Modal for inspection -->
+  <div id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div id="modal-content" tabindex="0">
+      <button id="modal-close" aria-label="Close inspection">&times;</button>
+      <!-- Dynamic content inserted here -->
+    </div>
+  </div>
+
   <script>
     async function loadGallery() {
-      const gallery = document.body;
+      const gallery = document.getElementById('gallery');
       try {
-        // fetch manifest.json from the same folder as this html
         const response = await fetch('manifest.json');
         if (!response.ok) throw new Error('Could not load manifest.json');
         const items = await response.json();
@@ -65,7 +216,17 @@
             img.src = item.src;
             img.alt = 'Gallery image';
             img.className = 'gallery-item';
+            img.tabIndex = 0;
+            img.setAttribute('role', 'button');
+            img.addEventListener('click', () => openModal('image', item.src));
+            img.addEventListener('keydown', e => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                openModal('image', item.src);
+              }
+            });
             gallery.appendChild(img);
+
           } else if (item.type === 'text') {
             const textResponse = await fetch(item.src);
             if (!textResponse.ok) {
@@ -74,8 +235,17 @@
             }
             const text = await textResponse.text();
             const div = document.createElement('div');
-            div.className = 'gallery-item';
+            div.className = 'gallery-item text-item';
             div.textContent = text;
+            div.tabIndex = 0;
+            div.setAttribute('role', 'button');
+            div.addEventListener('click', () => openModal('text', text));
+            div.addEventListener('keydown', e => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                openModal('text', text);
+              }
+            });
             gallery.appendChild(div);
           }
         }
@@ -87,6 +257,85 @@
         gallery.appendChild(errorDiv);
       }
     }
+
+    // Modal functionality
+    const modal = document.getElementById('modal');
+    const modalContent = document.getElementById('modal-content');
+    const modalClose = document.getElementById('modal-close');
+
+    function openModal(type, content) {
+      // Clear previous content except close button
+      [...modalContent.querySelectorAll(':not(#modal-close)')].forEach(el => el.remove());
+
+      if (type === 'image') {
+        const img = document.createElement('img');
+        img.src = content;
+        img.alt = 'Enlarged image';
+        modalContent.appendChild(img);
+      } else if (type === 'text') {
+        const textDiv = document.createElement('div');
+        textDiv.id = 'modal-text';
+        textDiv.textContent = content;
+        modalContent.appendChild(textDiv);
+      }
+
+      modal.classList.add('active');
+      modalClose.focus();
+      // Trap focus inside modal
+      trapFocus(modalContent);
+    }
+
+    function closeModal() {
+      modal.classList.remove('active');
+      // Return focus to last focused element
+      if (lastFocusedElement) {
+        lastFocusedElement.focus();
+      }
+    }
+
+    modalClose.addEventListener('click', closeModal);
+    modal.addEventListener('click', e => {
+      if (e.target === modal) closeModal();
+    });
+    window.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && modal.classList.contains('active')) {
+        closeModal();
+      }
+    });
+
+    // Keep track of last focused element to return focus after modal close
+    let lastFocusedElement = null;
+    document.addEventListener('click', e => {
+      if (!modal.classList.contains('active')) {
+        lastFocusedElement = e.target;
+      }
+    });
+
+    // Simple focus trap inside modal
+    function trapFocus(element) {
+      const focusableElements = element.querySelectorAll(
+        'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex="0"], [contenteditable]'
+      );
+      const firstFocusable = focusableElements[0];
+      const lastFocusable = focusableElements[focusableElements.length - 1];
+
+      element.addEventListener('keydown', function trap(e) {
+        if (e.key === 'Tab') {
+          if (e.shiftKey) {
+            if (document.activeElement === firstFocusable) {
+              e.preventDefault();
+              lastFocusable.focus();
+            }
+          } else {
+            if (document.activeElement === lastFocusable) {
+              e.preventDefault();
+              firstFocusable.focus();
+            }
+          }
+        }
+      });
+    }
+
     loadGallery();
   </script>
 </body>
