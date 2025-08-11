@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gallery - braden's website</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #222;
+      color: white;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow-x: auto;
+      overflow-y: hidden;
+      white-space: nowrap;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 20px;
+    }
+    .gallery-item {
+      display: inline-block;
+      width: 300px;
+      height: 200px;
+      margin-right: 20px;
+      background-color: #444;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #000;
+      text-align: center;
+      vertical-align: middle;
+      line-height: 200px;
+      font-size: 1.2rem;
+      user-select: none;
+      color: #eee;
+      flex-shrink: 0;
+      overflow: hidden;
+      padding: 10px;
+      box-sizing: border-box;
+      white-space: normal;
+    }
+    img.gallery-item {
+      object-fit: cover;
+      line-height: normal;
+      vertical-align: middle;
+      width: 300px;
+      height: 200px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #000;
+    }
+  </style>
+</head>
+<body>
+  <script>
+    async function loadGallery() {
+      const gallery = document.body;
+      try {
+        // fetch manifest.json from the same folder as this html
+        const response = await fetch('manifest.json');
+        if (!response.ok) throw new Error('Could not load manifest.json');
+        const items = await response.json();
+
+        for (const item of items) {
+          if (item.type === 'image') {
+            const img = document.createElement('img');
+            img.src = item.src;
+            img.alt = 'Gallery image';
+            img.className = 'gallery-item';
+            gallery.appendChild(img);
+          } else if (item.type === 'text') {
+            const textResponse = await fetch(item.src);
+            if (!textResponse.ok) {
+              console.warn(`Could not load text file: ${item.src}`);
+              continue;
+            }
+            const text = await textResponse.text();
+            const div = document.createElement('div');
+            div.className = 'gallery-item';
+            div.textContent = text;
+            gallery.appendChild(div);
+          }
+        }
+      } catch (e) {
+        console.error('Failed to load gallery:', e);
+        const errorDiv = document.createElement('div');
+        errorDiv.textContent = 'Failed to load gallery content.';
+        errorDiv.style.color = 'red';
+        gallery.appendChild(errorDiv);
+      }
+    }
+    loadGallery();
+  </script>
+</body>
+</html>

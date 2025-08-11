@@ -1,0 +1,4 @@
+[
+  {"type": "image", "src": "content/test.jpg"},
+  {"type": "text", "src": "content/note.txt"}
+]

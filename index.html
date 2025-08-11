@@ -20,6 +20,7 @@
     body {
       padding: 50px; /* add space so shadows won't get clipped */
       box-sizing: border-box;
+      flex-direction: column; /* stack vertically */
     }
 
     h1 {
@@ -29,11 +30,29 @@
       transition: color 0.2s ease;
       /* make sure shadows can extend beyond text */
       /* no clipping due to padding on body */
+      margin: 0;
+    }
+
+    #gallery-link {
+      display: block;
+      margin-top: 10px;
+      font-size: 1.2rem;
+      color: #aaa;
+      text-decoration: none;
+      user-select: none;
+      transition: color 0.2s ease;
+      cursor: pointer;
+    }
+
+    #gallery-link:hover {
+      color: #fff;
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
   <h1 id="shadow-text">braden's website</h1>
+  <a href="./gallery/index.html" id="gallery-link">enter gallery</a>
 
   <script>
     const text = document.getElementById('shadow-text');
