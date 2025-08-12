@@ -1,0 +1,29 @@
+/* Reset and base */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: white;
+  background-color: #121217;
+  overflow-y: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Utility classes */
+.text-center {
+  text-align: center;
+}
+
+.container {
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 20px;
+}

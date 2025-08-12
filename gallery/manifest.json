@@ -1,4 +1,15 @@
 [
-  {"type": "image", "src": "content/test.jpg"},
-  {"type": "text", "src": "content/note.txt"}
+  {"type": "image", "src": "content/me.jpg", "description": "Me! Hello!"},
+  {"type": "text", "src": "content/note.txt"},
+  {"type": "image", "src": "content/cavsTrumpets25.jpg", "description": "Trumpets From The 2025 Cleveland Cavaliers Script On Court Event"},
+  {"type": "image", "src": "content/animals.jpg", "description": "Ollie and K.C."},
+  {"type": "image", "src": "content/trumpets.jpg", "description": "From The 2025 NHL Stadium Series Pre-Game Concert"},
+  {"type": "image", "src": "content/fireworks.jpg"},
+  {"type": "video", "src": "content/bostonMello.mp4", "description": "Boston Crusaders Mello Feature, Innovations In Brass 2025"},
+  {"type": "image", "src": "content/hamilton.jpg"},
+  {"type": "image", "src": "content/theatre.jpg"},
+  {"type": "image", "src": "content/muck.jpg", "description": "Muck Fichigan!"},
+  {"type": "image", "src": "content/theShoe.jpg"},
+  {"type": "image", "src": "content/brunoMars.jpg", "description": "2025 Spring Show"},
+  {"type": "image", "src": "content/aNiceDrive.jpg"}
 ]
