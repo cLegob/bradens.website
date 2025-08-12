@@ -16,7 +16,7 @@ body.home {
   margin: 0;
 }
 
-#gallery-link {
+#swap-page-link {
   display: block;
   margin-top: 10px;
   font-size: 1.2rem;
@@ -27,7 +27,7 @@ body.home {
   cursor: pointer;
 }
 
-#gallery-link:hover {
+#swap-page-link:hover {
   color: #fff;
   text-decoration: underline;
 }
