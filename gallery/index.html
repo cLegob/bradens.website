@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>braden's gallery</title>
-    <link rel="stylesheet" href="/styles/base.css"/>
-    <link rel="stylesheet" href="/styles/gallery.css"/>
+    <link rel="stylesheet" href="/styles/base.css" />
+    <link rel="stylesheet" href="/styles/gallery.css" />
 </head>
 <body class="gallery">
-<h1 class="page-title">braden's gallery</h1>
+<h1 class="shadow-text" id="shadow-text">braden's gallery</h1>
+<nav id="page-links" aria-label="Navigation">
+    <a href="../" class="page-link">return home</a>
+    <!-- Add more links here -->
+</nav>
 <div id="gallery" aria-label="Gallery content"></div>
 
 <!-- Modal -->
@@ -18,7 +22,7 @@
     </div>
 </div>
 
+<script src="/scripts/shadowText.js" defer></script>
 <script src="/scripts/gallery.js" defer></script>
-
 </body>
 </html>
